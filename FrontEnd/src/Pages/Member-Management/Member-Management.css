@@ -1,0 +1,105 @@
+.Member-management-bar{
+  border: 2px solid white;
+}
+.filter-box {
+  position: absolute;
+  top: 100%;
+  width: 247px;
+  min-width: fit-content;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: white;
+  padding: 8px;
+}
+.filter-box .filter-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.filter-box .filter-list input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  transition: all 0.2s ease-in-out;
+}
+.filter-box .filter-list input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  color: white;
+}
+.Member-add {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+  transition: all 0.2s ease-in-out;
+}
+.Member-add:hover {
+  filter: brightness(1.1);
+}
+.Member-search {
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: white;
+}
+.Member-search input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.user-card {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.2s ease-in-out;
+  align-self: stretch;
+}
+.user-card:hover {
+  border: 2px solid var(--primary-color);
+}
+.user-card-img {
+  border-radius: 100%;
+  padding: 4px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+.user-card:hover .user-card-img {
+  border: 2px solid var(--primary-color);
+}
+.user-card-footer .user-branch-list {
+  padding-left: 16px;
+  max-height: 84px;
+  overflow: scroll;
+}
+.user-card .edit-button {
+  justify-self: end;
+  background-color: var(--secondary-color);
+  transition: all 0.1s ease-in-out;
+}
+.user-card .edit-button:hover {
+  background-color: var(--dark-color);
+}
+
+/* Tablet */
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .user-card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile */
+
+@media screen and (max-width: 767px) {
+  .Member-management-bar {
+    flex-direction: column;
+  }
+  .user-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

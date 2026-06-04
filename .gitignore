@@ -1,0 +1,13 @@
+node_modules
+.env
+node_modules/
+FrontEnd/node_modules/
+Backend/node_modules/
+dist/
+FrontEnd/dist/
+*.env
+env
+Backend/env
+Backend/img/
+.DS_Store
+Thumbs.db

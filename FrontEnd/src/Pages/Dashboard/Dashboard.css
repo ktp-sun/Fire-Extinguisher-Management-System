@@ -1,0 +1,115 @@
+.dashboard-container{
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: start;
+    align-content: stretch
+}
+
+.big-item{
+    display: flex;
+    flex-wrap: wrap;
+    flex:2;
+    min-width: fit-content;
+    height: fit-content;
+    border-radius: 8px;
+    text-wrap: nowrap;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 4px;
+}
+.small-item-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: start;
+    align-content: stretch
+}
+.small-item{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 4px;
+    min-width: fit-content;
+    color: var(--secondary-color);
+    border-radius: 8px;
+    background-color: white;
+    align-self: stretch
+}
+.small-item:nth-child(1){
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+.small-item:nth-child(2){
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+.small-item:nth-child(3){
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.small-item:nth-child(4){
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.box-title{
+    padding: 4px;
+    align-items: center;
+}
+.title-text{
+    margin-left: 4px;
+    font-weight: bold;
+}
+.long-item{
+    display: flex;
+    flex: 1;
+    padding: 4px;
+    min-width: fit-content;
+    border-radius: 8px;
+    background-color: white;
+    text-wrap: nowrap;
+    justify-content: start;
+    align-self: stretch;
+}
+.countdown{
+    border : 2px solid var(--primary-color);
+    border-radius: 8px;
+}
+.send-button{
+    padding: 4px 16px;
+    border-radius: 20px;
+}
+
+/* Tablet */
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .dashboard-container{
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .big-item{
+        flex: 1;
+        flex-direction: column;
+    }
+    .small-item{
+        flex: 1;
+    }
+}
+
+/* Mobile */
+
+@media screen and (max-width: 767px) {
+    .dashboard-container{
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .big-item{
+        flex: 1;
+        flex-direction: column;
+    }
+    .small-item{
+        flex: 1;
+    }
+}
+ 

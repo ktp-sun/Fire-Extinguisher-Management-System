@@ -1,0 +1,44 @@
+.header{
+    flex-wrap: wrap;
+}
+.header-text::before{
+    content:'';
+    height: 52px;
+    width: 4px;
+    background-color: var(--secondary-color);
+    position: absolute;
+}
+.branch-selector-container {
+    color: white;
+    background-color: var(--primary-color);
+    padding: 4px 8px;
+    border: 2px solid white;
+    border-radius: 8px;
+    min-width: fit-content;
+    width: 25%;
+}
+.branch-selector select{
+    -webkit-appearance: none;  
+    -moz-appearance: none;     
+    appearance: none;          
+    border: none;              
+    background: none;          
+    padding: 0;                
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+.branch-selector select:hover{
+    border: 2px solid white;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 767px) {
+    .branch-selector-container {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+}

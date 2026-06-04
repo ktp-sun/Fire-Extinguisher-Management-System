@@ -1,0 +1,1457 @@
+swagger: "2.0"
+info:
+  title: "API Documentation"
+  version: "1.0.0"
+  description: "Documentation for all API endpoints including item, report, users, company, and activity logs"
+
+tags:
+  - name: "item"
+    description: "Item management endpoints"
+  - name: "Item Logs"
+    description: "Item log endpoints"
+  - name: "report"
+    description: "Report management endpoints"
+  - name: "Users"
+    description: "User management endpoints"
+  - name: "Activity Logs"
+    description: "Activity log endpoints"
+  - name: "company"
+    description: "Company management endpoints"
+  - name: "getImage"
+    description: "Image retrieval endpoints"
+
+paths:
+  # Image API Endpoint
+  /getImage/{reportId}:
+    get:
+      tags: ["getImage"]
+      summary: "Get report image"
+      description: "Retrieve an image associated with a report"
+      parameters:
+        - name: "reportId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "ID of the report to retrieve image for"
+      responses:
+        200:
+          description: "Image file"
+          schema:
+            type: "file"
+        404:
+          description: "File not found"
+        500:
+          description: "Error retrieving file"
+
+  # Item API Endpoints
+  /item/getAllItem:
+    get:
+      tags: ["item"]
+      summary: "Get all item"
+      description: "Retrieve all item (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of all item"
+          schema:
+            type: "array"
+            item:
+              $ref: "#/definitions/Item"
+        500:
+          description: "Error fetching item"
+
+  /item/getAllItem/count:
+    get:
+      tags: ["item"]
+      summary: "Get item count"
+      description: "Get count of all item (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Count of all item"
+          schema:
+            type: "integer"
+        500:
+          description: "Error fetching item count"
+
+  /item/getItemList/{company}:
+    get:
+      tags: ["item"]
+      summary: "Get item by company"
+      description: "Retrieve item for a specific company (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of item for the company"
+          schema:
+            type: "array"
+            item:
+              $ref: "#/definitions/Item"
+        404:
+          description: "No item found"
+        500:
+          description: "Error fetching item"
+
+  /item/getItemList/count/{company}:
+    get:
+      tags: ["item"]
+      summary: "Get item count by company"
+      description: "Get count of item for a specific company (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Count of item for the company"
+          schema:
+            type: "integer"
+        404:
+          description: "No item found"
+        500:
+          description: "Error fetching item count"
+
+  /item/getItemList/{company}/{branch}:
+    get:
+      tags: ["item"]
+      summary: "Get item by company and branch"
+      description: "Retrieve item for a specific company branch (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of item for the branch"
+          schema:
+            type: "array"
+            item:
+              $ref: "#/definitions/Item"
+        404:
+          description: "No item found"
+        500:
+          description: "Error fetching item"
+
+  /item/getItemList/count/{company}/{branch}:
+    get:
+      tags: ["item"]
+      summary: "Get item count by company and branch"
+      description: "Get count of item for a specific company branch (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Count of item for the branch"
+          schema:
+            type: "integer"
+        404:
+          description: "No item found"
+        500:
+          description: "Error fetching item count"
+
+  /item/getItemInfo/{id}:
+    get:
+      tags: ["item"]
+      summary: "Get item details"
+      description: "Retrieve details for a specific item (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Item details"
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: "Item not found"
+        500:
+          description: "Error fetching item details"
+
+  /item/createItem/{company}/{branch}/{count}:
+    post:
+      tags: ["item"]
+      summary: "Create multiple item"
+      description: "Create multiple item for a company branch (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "count"
+          in: "path"
+          required: true
+          type: "integer"
+        - name: "data"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/ItemCreate"
+        - name: "user"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "item created successfully"
+          schema:
+            type: "array"
+            item:
+              $ref: "#/definitions/Item"
+        500:
+          description: "Error creating item"
+
+  /item/updateItem/{id}:
+    put:
+      tags: ["item"]
+      summary: "Update an item"
+      description: "Update details for a specific item (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "data"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/ItemUpdate"
+        - name: "user"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "Item updated successfully"
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: "Item not found"
+        500:
+          description: "Error updating item"
+
+  /item/updateStatus:
+    put:
+      tags: ["item"]
+      summary: "Update item status"
+      description: "Update status for multiple item (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "item_ids"
+          in: "body"
+          required: true
+          schema:
+            type: "array"
+            item:
+              type: "string"
+        - name: "status"
+          in: "body"
+          required: true
+          type: "string"
+        - name: "user"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "item status updated successfully"
+        404:
+          description: "No item found or no updates were made"
+        500:
+          description: "Error updating item status"
+
+  /item/deleteItem/{id}:
+    delete:
+      tags: ["item"]
+      summary: "Delete an item"
+      description: "Delete a specific item (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "user"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "Item deleted successfully"
+        404:
+          description: "Item not found"
+        500:
+          description: "Error deleting item"
+
+  # Item Log API Endpoints
+  /itemlog/getAllLog:
+    get:
+      tags: ["Item Logs"]
+      summary: "Get all item logs"
+      description: "Retrieve all item logs (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of all item logs"
+        500:
+          description: "Error fetching logs"
+
+  # Report API Endpoints
+  /report/getAllReport:
+    get:
+      tags: ["report"]
+      summary: "Get all report"
+      description: "Retrieve all report (Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of all report"
+        500:
+          description: "Error fetching report"
+
+  /report/getAllReport/count:
+    get:
+      tags: ["report"]
+      summary: "Get report count"
+      description: "Get count of all report (Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Count of all report"
+        500:
+          description: "Error fetching report count"
+
+  /report/getAllReportByStatus/{status}:
+    get:
+      tags: ["report"]
+      summary: "Get report by status"
+      description: "Retrieve report by status (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of report with the specified status"
+        400:
+          description: "Status must not be empty"
+        500:
+          description: "Error fetching report by status"
+
+  /report/getAllReportByStatus/count/{status}:
+    get:
+      tags: ["report"]
+      summary: "Get report count by status"
+      description: "Get count of report by status (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Count of report with the specified status"
+        400:
+          description: "Status must not be empty"
+        500:
+          description: "Error fetching report by status"
+
+  /report/getReportByUserDone/{user}:
+    get:
+      tags: ["report"]
+      summary: "Get done report by user"
+      description: "Retrieve done report for a specific user (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "user"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of done report for the user"
+        400:
+          description: "User must not be empty"
+        404:
+          description: "No done report found for this user"
+        500:
+          description: "Error fetching done report by user"
+
+  /report/getReportByUserFixing/{user}:
+    get:
+      tags: ["report"]
+      summary: "Get fixing report by user"
+      description: "Retrieve fixing report for a specific user (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "user"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of fixing report for the user"
+        400:
+          description: "User must not be empty"
+        404:
+          description: "No fixing report found for this user"
+        500:
+          description: "Error fetching fixing report by user"
+
+  /report/getReportByUser/{user}:
+    get:
+      tags: ["report"]
+      summary: "Get report by user"
+      description: "Retrieve all report for a specific user (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "user"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of report for the user"
+        400:
+          description: "User must not be empty"
+        404:
+          description: "User not found"
+        500:
+          description: "Error fetching report by user"
+
+  /report/getReportByCom/{company}:
+    get:
+      tags: ["report"]
+      summary: "Get report by company"
+      description: "Retrieve report for a specific company (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of report for the company"
+        400:
+          description: "Company must not be empty"
+        403:
+          description: "Access denied to this company data"
+        500:
+          description: "Error fetching report by company"
+
+  /report/getReportByComCount/{company}:
+    get:
+      tags: ["report"]
+      summary: "Get report count by company"
+      description: "Get count of report for a specific company (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Count of report for the company"
+        400:
+          description: "Company must not be empty"
+        403:
+          description: "Access denied to this company data"
+        500:
+          description: "Error fetching report count by company"
+
+  /report/getReportByBranch/{company}/{branch}:
+    get:
+      tags: ["report"]
+      summary: "Get report by branch"
+      description: "Retrieve report for a specific company branch (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of report for the branch"
+        400:
+          description: "Company and branch must not be empty"
+        403:
+          description: "Access denied to this branch data"
+        500:
+          description: "Error fetching report by branch"
+
+  /report/getReportStatusByCom/{company}/{status}:
+    get:
+      tags: ["report"]
+      summary: "Get report by company and status"
+      description: "Retrieve report for a company with specific status (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of report matching the criteria"
+        400:
+          description: "Company and status must not be empty"
+        403:
+          description: "Access denied to this company data"
+        500:
+          description: "Error fetching report by company and status"
+
+  /report/getReportStatusByCom/count/{company}/{status}:
+    get:
+      tags: ["report"]
+      summary: "Get report count by company and status"
+      description: "Get count of report for a company with specific status (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Count of report matching the criteria"
+        400:
+          description: "Company and status must not be empty"
+        403:
+          description: "Access denied to this company data"
+        500:
+          description: "Error fetching report count by company and status"
+
+  /report/getReportStatusByBranch/{company}/{branch}/{status}:
+    get:
+      tags: ["report"]
+      summary: "Get report by branch and status"
+      description: "Retrieve report for a branch with specific status (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of report matching the criteria"
+        400:
+          description: "Company, branch and status must not be empty"
+        403:
+          description: "Access denied to this branch data"
+        500:
+          description: "Error fetching report by branch and status"
+
+  /report/getReportStatusByBranch/count/{company}/{branch}/{status}:
+    get:
+      tags: ["report"]
+      summary: "Get report count by branch and status"
+      description: "Get count of report for a branch with specific status (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Count of report matching the criteria"
+        400:
+          description: "Company, branch and status must not be empty"
+        403:
+          description: "Access denied to this branch data"
+        500:
+          description: "Error fetching report by branch and status"
+
+  /report/getReportById/{id}:
+    get:
+      tags: ["report"]
+      summary: "Get report by ID"
+      description: "Retrieve a specific report by ID (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Report details"
+        400:
+          description: "ID must not be empty"
+        500:
+          description: "Internal server error"
+
+  /report/createReport/{id}:
+    post:
+      tags: ["report"]
+      summary: "Create a report"
+      description: "Create a new report for an item (Public)"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "data"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              problem:
+                type: "string"
+              image:
+                type: "string"
+                format: "binary"
+                description: "Image file of the reported issue"
+        - name: "user"
+          in: "body"
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "Report created successfully"
+        400:
+          description: "Incomplete data"
+        404:
+          description: "Item not found"
+        500:
+          description: "Error creating report"
+
+  /report/updateReport/{status}:
+    put:
+      tags: ["report"]
+      summary: "Update report status"
+      description: "Update status for multiple report (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+          enum: ["pending", "accepted", "fixing", "done", "rejected"]
+        - name: "ids"
+          in: "body"
+          required: true
+          schema:
+            type: "array"
+            item:
+              type: "string"
+        - name: "send_to"
+          in: "body"
+          type: "string"
+        - name: "user"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "Report and item updated successfully"
+        400:
+          description: "Invalid status or missing IDs"
+        404:
+          description: "Error updating item status"
+        500:
+          description: "Error updating report"
+
+  /report/getReportByStatus/{status}:
+    get:
+      tags: ["report"]
+      summary: "Get report by status"
+      description: "Retrieve report with specific status (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "status"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of report with the specified status"
+        400:
+          description: "Status must not be empty"
+        500:
+          description: "Error fetching report by status"
+
+  # Users API Endpoints
+  /users/me:
+    get:
+      tags: ["Users"]
+      summary: "Get current user info"
+      description: "Get information about the currently authenticated user"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Current user information"
+        500:
+          description: "Error fetching user data"
+
+  /users/login:
+    post:
+      tags: ["Users"]
+      summary: "User login"
+      description: "Authenticate user and get access token"
+      parameters:
+        - name: "username"
+          in: "body"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "body"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Login successful"
+        400:
+          description: "Username and password are required"
+        500:
+          description: "Error processing login"
+
+  /users/getClientUser/{client_id}:
+    get:
+      tags: ["Users"]
+      summary: "Get client users"
+      description: "Retrieve users for a specific client (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "client_id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of client users"
+        403:
+          description: "Access denied to this client data"
+        500:
+          description: "Error fetching user details"
+
+  /users/getUsersCount/{client_id}:
+    get:
+      tags: ["Users"]
+      summary: "Get user count for client"
+      description: "Get count of users for a specific client (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "client_id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Count of client users"
+        403:
+          description: "Access denied to this client data"
+        500:
+          description: "Error fetching user count"
+
+  /users/createClientUser:
+    post:
+      tags: ["Users"]
+      summary: "Create client user"
+      description: "Create a new user for a client (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "userData"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        201:
+          description: "User created successfully"
+        400:
+          description: "Missing required fields"
+        409:
+          description: "Username already exists"
+        500:
+          description: "Error processing user operation"
+
+  /users/updateClientUser/{username}:
+    put:
+      tags: ["Users"]
+      summary: "Update client user"
+      description: "Update a client user (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "username"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "userData"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "User updated successfully"
+        400:
+          description: "Missing required fields"
+        403:
+          description: "Cannot modify this user type"
+        500:
+          description: "Error processing user operation"
+
+  /users/deleteClientUser/{username}:
+    delete:
+      tags: ["Users"]
+      summary: "Delete client user"
+      description: "Delete a client user (Super Member only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "username"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "User deleted successfully"
+        403:
+          description: "Cannot modify this user type"
+        500:
+          description: "Error processing user operation"
+
+  /users/getWorkerUser:
+    get:
+      tags: ["Users"]
+      summary: "Get worker users"
+      description: "Retrieve all worker users (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of worker users"
+        500:
+          description: "Error fetching user details"
+
+  /users/getAllUsers:
+    get:
+      tags: ["Users"]
+      summary: "Get all users"
+      description: "Retrieve all users (Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of all users"
+        500:
+          description: "Error fetching user details"
+
+  /users/getOperatorUser:
+    get:
+      tags: ["Users"]
+      summary: "Get operator users"
+      description: "Retrieve all operator users (Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of operator users"
+        500:
+          description: "Error fetching user details"
+
+  /users/getAllUsersCount:
+    get:
+      tags: ["Users"]
+      summary: "Get total user count"
+      description: "Get count of all users (Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Count of all users"
+        500:
+          description: "Error fetching user count"
+
+  /users/getUser/{username}:
+    get:
+      tags: ["Users"]
+      summary: "Get user by username"
+      description: "Retrieve a specific user by username (Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "username"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "User details"
+        500:
+          description: "Error fetching user details"
+
+  /users/createUser:
+    post:
+      tags: ["Users"]
+      summary: "Create user"
+      description: "Create a new user (Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "userData"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        201:
+          description: "User created successfully"
+        400:
+          description: "Missing required fields"
+        409:
+          description: "Username already exists"
+        500:
+          description: "Error processing user operation"
+
+  /users/updateUser/{username}:
+    put:
+      tags: ["Users"]
+      summary: "Update user"
+      description: "Update a user (Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "username"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "userData"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "User updated successfully"
+        400:
+          description: "Missing required fields"
+        403:
+          description: "Cannot modify this user type"
+        500:
+          description: "Error processing user operation"
+
+  /users/deleteUser/{username}:
+    delete:
+      tags: ["Users"]
+      summary: "Delete user"
+      description: "Delete a user (Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "username"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "User deleted successfully"
+        403:
+          description: "Cannot modify this user type"
+        500:
+          description: "Error processing user operation"
+
+  # Activity Log API Endpoints
+  /activitylog/all:
+    get:
+      tags: ["Activity Logs"]
+      summary: "Get all activity logs"
+      description: "Retrieve all activity logs (Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of all activity logs"
+        404:
+          description: "No activity logs found"
+        500:
+          description: "Error fetching activity logs"
+
+  /activitylog/login-logout:
+    get:
+      tags: ["Activity Logs"]
+      summary: "Get login/logout logs"
+      description: "Retrieve login and logout activity logs (Super Member only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of login/logout logs"
+        404:
+          description: "No activity logs found"
+        500:
+          description: "Error fetching activity logs"
+
+  /activitylog/create:
+    post:
+      tags: ["Activity Logs"]
+      summary: "Create activity log"
+      description: "Create a new activity log (Public)"
+      parameters:
+        - name: "logData"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        201:
+          description: "Activity log created successfully"
+        500:
+          description: "Error creating activity log"
+
+  # Company API Endpoints
+  /company/getAllCompany:
+    get:
+      tags: ["company"]
+      summary: "Get all company"
+      description: "Retrieve all company (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of all company"
+        500:
+          description: "Error fetching all company"
+
+  /company/getCompanyInfo/{company}:
+    get:
+      tags: ["company"]
+      summary: "Get company info"
+      description: "Retrieve information for a specific company (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Company information"
+          schema:
+            $ref: "#/definitions/Company"
+        404:
+          description: "Company not found"
+        500:
+          description: "Error fetching company info"
+
+  /company/getAllBranch/{company}:
+    get:
+      tags: ["company"]
+      summary: "Get all branches for company"
+      description: "Retrieve all branches for a specific company (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "List of branches for the company"
+        404:
+          description: "No branches found"
+        500:
+          description: "Error fetching branch"
+
+  /company/getCompanyBranch/:
+    get:
+      tags: ["company"]
+      summary: "Get company branches"
+      description: "Retrieve branches for the current user's company (Super Member only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of company branches"
+        500:
+          description: "Error fetching company branches"
+
+  /company/getNextCheck/{company}/{branch}:
+    get:
+      tags: ["company"]
+      summary: "Get next check date"
+      description: "Retrieve next check date for a company branch (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Next check date"
+        500:
+          description: "Error fetching next check"
+
+  /company/getLastCheck/{company}/{branch}:
+    get:
+      tags: ["company"]
+      summary: "Get last check date"
+      description: "Retrieve last check date for a company branch (Authenticated users)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Last check date"
+        500:
+          description: "Error fetching last check"
+
+  /company/getLocation/{company}/{branch}:
+    get:
+      tags: ["company"]
+      summary: "Get company location"
+      description: "Retrieve location information for a company branch"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Company location information"
+          schema:
+            type: "object"
+            properties:
+              location:
+                type: "string"
+              latitude:
+                type: "number"
+                format: "float"
+              longitude:
+                type: "number"
+                format: "float"
+        500:
+          description: "Error fetching company info"
+
+  /company/createCompany/{company}/{branch}:
+    post:
+      tags: ["company"]
+      summary: "Create company"
+      description: "Create a new company branch (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              location:
+                type: "string"
+              latitude:
+                type: "number"
+                format: "float"
+              longitude:
+                type: "number"
+                format: "float"
+      responses:
+        201:
+          description: "Company created successfully"
+        500:
+          description: "Error creating company"
+
+  /company/updateCompany/{company}/{branch}:
+    put:
+      tags: ["company"]
+      summary: "Update company"
+      description: "Update a company branch (Worker and Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              location:
+                type: "string"
+              latitude:
+                type: "number"
+                format: "float"
+              longitude:
+                type: "number"
+                format: "float"
+      responses:
+        200:
+          description: "Company updated successfully"
+        304:
+          description: "Company not modified"
+        500:
+          description: "Error updating company"
+
+  /company/deleteCompany/{company}/{branch}:
+    delete:
+      tags: ["company"]
+      summary: "Delete company"
+      description: "Delete a company branch (Admin only)"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "company"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "branch"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Company deleted successfully"
+        500:
+          description: "Error deleting company"
+
+# Definitions
+definitions:
+  Item:
+    type: "object"
+    properties:
+      item_id:
+        type: "string"
+      client_id:
+        type: "string"
+      client_branch_id:
+        type: "string"
+      item_brand:
+        type: "string"
+      item_capacity:
+        type: "string"
+      item_color:
+        type: "string"
+      item_type:
+        type: "string"
+      item_class:
+        type: "string"
+      item_location:
+        type: "string"
+      latitude:
+        type: "number"
+        format: "float"
+      longitude:
+        type: "number"
+        format: "float"
+      item_status:
+        type: "string"
+        enum: ["available", "reporting", "fixing", "unavailable"]
+
+  ItemCreate:
+    type: "object"
+    properties:
+      item_brand:
+        type: "string"
+      item_capacity:
+        type: "string"
+      item_color:
+        type: "string"
+      item_type:
+        type: "string"
+      item_class:
+        type: "string"
+      item_location:
+        type: "string"
+      latitude:
+        type: "number"
+        format: "float"
+      longitude:
+        type: "number"
+        format: "float"
+
+  ItemUpdate:
+    type: "object"
+    properties:
+      item_brand:
+        type: "string"
+      item_capacity:
+        type: "string"
+      item_color:
+        type: "string"
+      item_type:
+        type: "string"
+      item_class:
+        type: "string"
+      item_location:
+        type: "string"
+      latitude:
+        type: "number"
+        format: "float"
+      longitude:
+        type: "number"
+        format: "float"
+      item_status:
+        type: "string"
+        enum: ["available", "reporting", "fixing", "unavailable"]
+
+  Company:
+    type: "object"
+    properties:
+      company:
+        type: "string"
+      branch:
+        type: "string"
+      location:
+        type: "string"
+      latitude:
+        type: "number"
+        format: "float"
+      longitude:
+        type: "number"
+        format: "float"
+      next_check:
+        type: "string"
+        format: "date-time"
+      last_check:
+        type: "string"
+        format: "date-time"
+
+# Security Definitions
+securityDefinitions:
+  bearerAuth:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    description: "JWT authorization token"

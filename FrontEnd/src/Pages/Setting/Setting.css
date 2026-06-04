@@ -1,0 +1,13 @@
+.setting-container input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    transition: all 0.2s ease-in-out;
+  }
+  .setting-container  input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    color: white;
+  }

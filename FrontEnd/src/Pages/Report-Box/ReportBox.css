@@ -1,0 +1,175 @@
+.report-box-Admin {
+  flex-wrap: wrap;
+}
+.Report-list-search {
+  border: 2px solid var(--secondary-color);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: white;
+}
+.Report-list-search input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.report-box-select-all input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  transition: all 0.2s ease-in-out;
+  
+}
+.report-box-select-all input[type="checkbox"]:checked {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.report-box-select-all {
+  color: var(--primary-color);
+}
+
+.report-box-select-all:hover {
+  filter: brightness(0.9);
+}
+
+.report-box-list-item span input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  transition: all 0.2s ease-in-out;
+}
+.report-box-list-item span input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  color: white;
+}
+.report-box-list-item span.min-w-fit.w-full.break-words {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.4; /* Add line-height for better readability */
+  padding: 4px; /* Optional padding for text spacing */
+  max-height: 100px; /* Limit height if you need to trim long descriptions */
+  overflow: hidden; /* Hide overflow if the description is too long */
+}
+
+.report-box-list-item span.min-w-fit.w-full.break-words:hover {
+  max-height: none; /* Allow full description to show on hover */
+  overflow: visible; /* Show full text */
+}
+
+.report-box-list-bar {
+  border: 2px solid white;
+}
+.filter-box {
+  position: absolute;
+  top: 100%;
+  width: 247px;
+  min-width: fit-content;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: white;
+  padding: 8px;
+}
+.filter-box .filter-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.filter-box .filter-list input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  transition: all 0.2s ease-in-out;
+}
+.filter-box .filter-list input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.report-box-search {
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: white;
+}
+.report-box-search input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.report-box-card {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.2s ease-in-out;
+  align-self: stretch;
+}
+.report-box-card:hover {
+  border: 2px solid var(--primary-color);
+}
+.report-box-card-footer {
+  padding-left: 16px;
+  max-height: 84px;
+  overflow: scroll;
+}
+.report-box-card .edit-button {
+  justify-self: end;
+  background-color: var(--secondary-color);
+  transition: all 0.1s ease-in-out;
+}
+.report-box-card .edit-button:hover {
+  background-color: var(--primary-color);
+}
+
+/* Tablet */
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .report-box-card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .report-box-card .edit-button span {
+    display: none;
+  }
+  .report-box-card .submit-button span {
+    display: none;
+  }
+}
+
+/* Mobile */
+
+@media screen and (max-width: 767px) {
+  .report-box-list-bar {
+    flex-direction: column;
+  }
+  .report-box-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .report-box-card .edit-button span {
+    display: none;
+  }
+  .report-box-card .submit-button span {
+    display: none;
+  }
+}

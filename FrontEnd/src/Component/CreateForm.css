@@ -1,0 +1,11 @@
+.col-or-row{
+    flex-direction: row;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 767px) {
+    .col-or-row{
+        flex-direction: column;
+    }
+}

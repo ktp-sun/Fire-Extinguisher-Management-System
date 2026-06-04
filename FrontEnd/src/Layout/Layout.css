@@ -1,0 +1,41 @@
+/* .navbar{
+    background-color: red;
+    color: white;
+}
+
+.header{
+    background-color: green;
+    color: white;
+}
+
+.outlet{
+    background-color: blue;
+    color: white;
+}
+
+.footer{
+    background-color: black;
+    color: white;
+} */
+
+.content{
+    margin-left: 256px;
+}
+
+/* Tablet */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .content{
+        padding: 8px;
+        margin-left: 60px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 767px) {
+    .content{
+        padding: 8px;
+        margin-left: 60px;
+    }
+}

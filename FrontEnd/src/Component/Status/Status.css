@@ -1,0 +1,65 @@
+.status-container{
+  width: 100%;
+  flex-wrap: wrap;
+  background-color: white;
+  border-radius: 8px ;
+}
+.status-box{
+  flex: 1;
+  min-width: fit-content;
+  margin: 4px;
+  height: fit-content;
+  padding : 16px;
+  border-radius: 8px;
+  color: white;
+  text-wrap: nowrap;
+}
+.status-box:nth-child(1){
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+.status-box:nth-child(2){
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+.status-box:nth-child(3){
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+.status-box:nth-child(4){
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+.count-title h1{
+  font-family: 'Sukhumvit', sans-serif;
+}
+
+/* Tablet */
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .status-box{
+    min-width: 40%;
+    margin: 4px;
+    padding : 8px;
+    border-radius: 8px;
+  }
+  .status-box h1{
+    font-size: 24px;
+  }
+}
+
+/* Mobile */
+
+
+@media screen and (max-width: 767px) {
+  .status-container{
+    flex-direction: column;
+  }
+  .status-box{
+    padding : 8px;
+    border-radius: 8px;
+  }
+  .status-box h1{
+    font-size: 20px;
+  }
+}

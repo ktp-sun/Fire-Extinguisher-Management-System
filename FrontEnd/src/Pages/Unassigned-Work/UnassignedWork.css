@@ -1,0 +1,177 @@
+.Viewdetils{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+}
+
+.unassigned-work-Admin{
+  flex-wrap: wrap;
+}
+.Worker-list-search {
+  border: 2px solid var(--secondary-color);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: white;
+}
+.Worker-list-search input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.unassigned-work-select-all input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  transition: all 0.2s ease-in-out;
+}
+.unassigned-work-select-all input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  color: white;
+}
+.unassigned-work-list-container {
+  height: 552px;  /* Fixed height */
+
+}
+
+.unassigned-work-list-container > .unassigned-work-list-item {
+  overflow: hidden; /* Ensure no child elements are overflowing */
+}
+
+.unassigned-work-select-all {
+  color: var(--primary-color);
+}
+
+.unassigned-work-select-all:hover{
+
+filter: brightness(0.9);}
+
+.unassigned-work-list-item span input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  transition: all 0.2s ease-in-out;
+}
+.unassigned-work-list-item span input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.unassigned-work-list-bar {
+    border: 2px solid white;
+  }
+  .filter-box {
+    position: absolute;
+    top: 100%;
+    width: 247px;
+    min-width: fit-content;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    background-color: white;
+    padding: 8px;
+  }
+  .filter-box .filter-list {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .filter-box .filter-list input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    transition: all 0.2s ease-in-out;
+  }
+  .filter-box .filter-list input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .unassigned-work-search {
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: white;
+  }
+  .unassigned-work-search input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+  .unassigned-work-card {
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.2s ease-in-out;
+    align-self: stretch;
+  }
+  .unassigned-work-card:hover {
+    border: 2px solid var(--primary-color);
+  }
+  .unassigned-work-card-footer {
+    max-height: 84px;
+    overflow: scroll;
+  }
+  .unassigned-work-card .edit-button {
+    justify-self: end;
+    background-color: var(--secondary-color);
+    transition: all 0.1s ease-in-out;
+  }
+  .unassigned-work-card .edit-button:hover {
+    background-color: var(--primary-color);
+  }
+  /* ซ่อน scroll bar ทั้งแนวนอนและแนวตั้ง */
+::-webkit-scrollbar {
+  display: none;
+}
+
+  /* Tablet */
+  
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    .unassigned-work-card-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .unassigned-work-card .edit-button span{
+      display: none;
+    }
+    .unassigned-work-card .submit-button span{
+      display: none;
+    }
+  }
+  
+  /* Mobile */
+  
+  @media screen and (max-width: 767px) {
+    .unassigned-work-list-bar {
+      flex-direction: column;
+    }
+    .unassigned-work-card-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .unassigned-work-card .edit-button span{
+      display: none;
+    }
+    .unassigned-work-card .submit-button span{
+      display: none;
+    }
+  }
+  

@@ -1,0 +1,112 @@
+.product-page{
+    background-image: url('../../assets/login-assets/Bg/BG.jpg');
+}
+.product-image img {
+    width: 100%;
+    height: auto;
+    max-width: 512px;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.product-image img:hover {
+    transform: scale(1.05);
+}
+
+.product-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.product-table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.product-table tbody tr {
+    border-bottom: 1px solid var(--gray-color);
+}
+
+.product-table tbody tr:hover {
+    background-color: var(--light-color);
+    cursor: pointer;
+}
+
+.product-table tbody td {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+/* Mobile View */
+@media screen and (max-width: 767px) {
+    .product-image img {
+        max-width: 380px;
+        height: auto;
+    }
+
+    .product-table {
+        font-size: 0.9rem;
+    }
+
+    .product-table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .product-table tbody td {
+        width: 100%;
+        display: block;
+        padding: 10px;
+    }
+
+    .product-info, .product-image {
+        margin-bottom: 15px;
+    }
+}
+
+/* Button Styling */
+.report-button button {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 14px 25px;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.report-button button:hover {
+    background-color: var(--secondary-color-hover);
+}
+
+.report-button button box-icon {
+    margin-right: 8px;
+}
+
+/* Shadows & Cards */
+.product-container {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.product-left, .product-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-image {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.product-table-container {
+    max-width: 600px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
