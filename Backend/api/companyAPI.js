@@ -31,7 +31,7 @@ router.get('/getAllBranch/:company', auth, async (req, res) => {
     const { company } = req.params;
     try {
         const branch = await companyFunc.getBranchList(company);
-        if (branch.length === 0) {
+        if (!branch || branch.length === 0) {
             return res.status(404).json(branch);
         }
         res.json( branch );

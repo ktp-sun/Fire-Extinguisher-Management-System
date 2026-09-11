@@ -58,7 +58,7 @@ async function getNextCheck(company, branch) {
             { client_id: company, 'client_branch_id': branch },
             { 'next_check': 1, _id: 0 }
         ).lean();
-        return result.next_check;
+        return result?.next_check ?? null;
     } catch (error) {
         console.error(`Error fetching next check for ${company}/${branch}:`, error);
         return null;
@@ -71,7 +71,7 @@ async function getLastCheck(company) {
             { client_id: company },
             { 'last_check': 1, _id: 0 }
         ).lean();
-        return result.last_check;
+        return result?.last_check ?? [];
     } catch (error) {
         console.error(`Error fetching last check for ${company}:`, error);
         return null;
@@ -84,7 +84,7 @@ async function getLocation(company, branch) {
             { client_id: company, 'client_branch_id': branch },
             { _id: 0 }
         ).lean();
-        return result.location;
+        return result?.location ?? null;
     } catch (error) {
         console.error(`Error fetching location for ${company}/${branch}:`, error);
         return null;

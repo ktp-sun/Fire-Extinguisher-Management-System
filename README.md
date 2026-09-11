@@ -4,6 +4,20 @@ A full-stack web application for managing fire extinguisher inventory, client lo
 
 ## Screenshots
 
+![Portfolio project visual](docs/screenshots/design-01.png)
+
+> Role images are captured from the running frontend with the local MongoDB backend connected. Demo Client may show empty counts until extinguisher records are added.
+
+### Role-based UI
+
+| Role | Preview |
+| --- | --- |
+| Super Admin | ![Super Admin dashboard](docs/screenshots/roles/role-super-admin.png) |
+| Admin | ![Admin dashboard](docs/screenshots/roles/role-admin.png) |
+| Worker | ![Worker dashboard](docs/screenshots/roles/role-worker.png) |
+| Super Member | ![Super Member dashboard](docs/screenshots/roles/role-super-member.png) |
+| Member | ![Member dashboard](docs/screenshots/roles/role-member.png) |
+
 <p align="center">
   <img src="docs/screenshots/overview.png" alt="Project overview screenshot" width="800">
 </p>

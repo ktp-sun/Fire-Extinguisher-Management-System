@@ -4,6 +4,7 @@ import "./Status.css";
 import "boxicons";
 
 const Status = ({ role, company, branch }) => {
+  const safeCount = value => Number.isFinite(value) ? value : 0;
   const [MemberItemCount, setMemberItemCount] = useState(0);
   const animatedMemberItemCount = useAnimatedNumber(MemberItemCount);
   
@@ -42,6 +43,13 @@ const Status = ({ role, company, branch }) => {
   const [AdminTotalUser, AdminSetTotalUser] = useState(0);
   const animatedAdminTotalUser = useAnimatedNumber(AdminTotalUser);
 
+  // Super Admin counters are loaded asynchronously by the dashboard.
+  // Keep the initial render safe while those values are unavailable.
+  const getAllItemCompanyCount = () => 0;
+  const getCompanyCount = () => 0;
+  const getAllUserCount = () => 0;
+  const getAllLogReportPendingCount = () => 0;
+
   
 
   const authHeaders = {
@@ -55,37 +63,38 @@ const Status = ({ role, company, branch }) => {
       try {
         if (role === "Member" && branch !== "All Branches") {
           const itemInBranchCount = await fetch(`http://localhost:3000/item/getItemList/count/${company}/${branch}`, authHeaders);
-          setMemberItemCount(parseInt(await itemInBranchCount.text()));
+          setMemberItemCount(safeCount(parseInt(await itemInBranchCount.text(), 10)));
 
           const reportPendingCount = await fetch(`http://localhost:3000/report/getReportStatusByBranch/count/${company}/${branch}/pending`, authHeaders);
-          setMemberReportPendingCount(parseInt(await reportPendingCount.text()));
+          setMemberReportPendingCount(safeCount(parseInt(await reportPendingCount.text(), 10)));
 
           const badItemCount = await fetch(`http://localhost:3000/report/getReportStatusByBranch/count/${company}/${branch}/accepted`, authHeaders);
-          setMemberBadItemCount(parseInt(await badItemCount.text()));
+          setMemberBadItemCount(safeCount(parseInt(await badItemCount.text(), 10)));
 
           const nextCheck = await fetch(`http://localhost:3000/company/getNextCheck/${company}/${branch}`, authHeaders);
-          setMemberNextCheck((await nextCheck.text()).replace(/"/g, ""));
+          const nextCheckText = (await nextCheck.text()).replace(/"/g, "").trim();
+          setMemberNextCheck(nextCheckText && nextCheckText !== "null" ? nextCheckText : "");
         }
 
         else if (role === "Super Member") {
 
           const itemInBranchCount = await fetch(`http://localhost:3000/item/getItemList/count/${company}`, authHeaders);
-          setSuperMemberItemCount(parseInt(await itemInBranchCount.text()));
+          setSuperMemberItemCount(safeCount(parseInt(await itemInBranchCount.text(), 10)));
 
           const reportPendingURL = branch !== "All Branches"
             ? `http://localhost:3000/report/getReportStatusByBranch/count/${company}/${branch}/pending`
             : `http://localhost:3000/report/getReportStatusByCom/count/${company}/pending`;
           const reportPending = await fetch(reportPendingURL, authHeaders);
-          setSuperMemberReportPendingCount(parseInt(await reportPending.text()));
+          setSuperMemberReportPendingCount(safeCount(parseInt(await reportPending.text(), 10)));
 
           const badItemURL = branch !== "All Branches"
             ? `http://localhost:3000/report/getReportStatusByBranch/count/${company}/${branch}/accepted`
             : `http://localhost:3000/report/getReportStatusByCom/count/${company}/accepted`;
           const badItem = await fetch(badItemURL, authHeaders);
-          setSuperMemberBadItemCount(parseInt(await badItem.text()));
+          setSuperMemberBadItemCount(safeCount(parseInt(await badItem.text(), 10)));
 
           const totalUser = await fetch(`http://localhost:3000/users/getUsersCount/${company}`, authHeaders);
-          setSuperMemberTotalUser(parseInt(await totalUser.text()));
+          setSuperMemberTotalUser(safeCount(parseInt(await totalUser.text(), 10)));
 
           const branches = await fetch(`http://localhost:3000/company/getAllBranch/${company}`, authHeaders);
           setSuperMemberTotalBranch((await branches.json()).length);
@@ -93,13 +102,13 @@ const Status = ({ role, company, branch }) => {
 
         else if (role === "Admin") {
           const itemCount = await fetch(`http://localhost:3000/item/getAllItem/count`, authHeaders);
-          setAdminItemCount(parseInt(await itemCount.text()));
+          setAdminItemCount(safeCount(parseInt(await itemCount.text(), 10)));
 
           const reportCount = await fetch(`http://localhost:3000/report/getAllReportByStatus/count/pending`, authHeaders);
-          setAdminReportPendingCount(parseInt(await reportCount.text()));
+          setAdminReportPendingCount(safeCount(parseInt(await reportCount.text(), 10)));
 
           const badItemCount = await fetch(`http://localhost:3000/report/getAllReportByStatus/count/accepted`, authHeaders);
-          setAdminBadItemCount(parseInt(await badItemCount.text()));
+          setAdminBadItemCount(safeCount(parseInt(await badItemCount.text(), 10)));
 
           const totalUsers = await fetch(`http://localhost:3000/users/getAllUsers`, authHeaders);
           AdminSetTotalUser((await totalUsers.json()).length);
